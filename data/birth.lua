@@ -21,7 +21,7 @@ newBirthDescriptor {
         default_wilderness = { "playerpop", "allied" },
         starting_zone = "trollmire",
         starting_quest = "start-allied",
-        starting_intro = "racoonian",
+        starting_intro = "raccoonian",
         size_category = 2,
         resolvers.inscription("INFUSION:_REGENERATION", { cooldown = 10, dur = 5, heal = 60 }),
         resolvers.inscription("INFUSION:_WILD", { cooldown = 12, what = { physical = true }, dur = 4, power = 14 }),
@@ -46,7 +46,7 @@ newBirthDescriptor {
     inc_stats = { dex = 2, mag = -4, cun = 5 },
     experience = 1.15,
     copy = {
-        moddable_tile = "racoonian",
+        moddable_tile = "raccoonian",
         random_name_def = "halfling_#sex#",
         life_rating = 11,
     }

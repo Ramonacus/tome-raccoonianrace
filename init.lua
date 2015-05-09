@@ -2,7 +2,7 @@
 -- 
 --
 
-long_name = "Racconian Race"
+long_name = "Raccoonian Race"
 short_name = "raccoonianrace"
 for_module = "tome"
 version = {1,3,0}
