@@ -45,6 +45,12 @@ newBirthDescriptor {
     },
     inc_stats = { dex = 2, mag = -4, cun = 5 },
     experience = 1.15,
+    talents_types = {
+        ["race/raccoonian"] = { true, 0 },
+    },
+    talents = {
+        [ActorTalents.T_RACCOONIAN_SENSES] = 1,
+    },
     copy = {
         moddable_tile = "raccoonian",
         random_name_def = "halfling_#sex#",

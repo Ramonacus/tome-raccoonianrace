@@ -1,2 +1,7 @@
-_examples
+# IDE stuff
+.idea
+
+# Windows stuff
 Thumbs.db
+
+_examples
