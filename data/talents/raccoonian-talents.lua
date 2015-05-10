@@ -31,6 +31,11 @@ newTalent {
         return math.floor(self:combatScale(self:getCun(10, true) * self:getTalentLevel(t), 5, 0, 55, 50))
     end,
     action = function(self, t)
+        local rad = self:getTalentRadius(t)
+        self:setEffect(self.EFF_SENSE, 3 + self:getTalentLevel(t), {
+            range = rad,
+            actor = 1,
+        })
         return true
     end,
     info = function(self, t)
