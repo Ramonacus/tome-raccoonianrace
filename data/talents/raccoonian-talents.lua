@@ -46,3 +46,19 @@ newTalent {
 All creatures in a radius of %d for 3 turns. Your deep focus will also slow you down a 20%% for the duration.]]):format(rad)
     end,
 }
+newTalent{
+    name = "Raccoonian Rage",
+    type = {"race/raccoonian", 2},
+    mode = "passive",
+    require = racial_req2,
+    points = 5,
+    on_learn = function(self, t)
+
+    end,
+    on_unlearn = function(self, t)
+
+    end,
+    info = function(self, t)
+        return ([[Lorem ipsum dolor sit amet]])
+    end,
+}
