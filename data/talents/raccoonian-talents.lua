@@ -32,7 +32,9 @@ newTalent {
     end,
     action = function(self, t)
         local rad = self:getTalentRadius(t)
-        self:setEffect(self.EFF_SENSE, 3 + self:getTalentLevel(t), {
+        -- Hardcoded duration to 3 and speed to -0.2.
+        self:setEffect(self.EFF_RACCOONIAN_SENSES, 3, {
+            speed = -0.2,
             range = rad,
             actor = 1,
         })
