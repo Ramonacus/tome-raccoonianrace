@@ -54,7 +54,7 @@ newBirthDescriptor {
     copy = {
         moddable_tile = "raccoonian",
         random_name_def = "halfling_#sex#",
-        life_rating = 11,
+        life_rating = 10,
     }
 }
 
