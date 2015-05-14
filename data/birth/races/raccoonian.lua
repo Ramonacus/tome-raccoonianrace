@@ -36,7 +36,7 @@ newBirthDescriptor {
     name = 'Raccoonian',
     desc = {
         'Raccoonians are usually timid and reclusive, albeit some individuals crave for a more adventurous lifestyle.',
-        'They possess agile limbs, natural cunning, keen senses and no talent for magic whatsoever.',
+        'They possess agile limbs, natural cunning, keen senses and strong bonds with their animal ancestry. They do not practice arcane magic and have no talent for it.',
         '#GOLD#Stat modifiers:',
         '#LIGHT_BLUE# * +0 Strength, +2 Dexterity, +0 Constitution',
         '#LIGHT_BLUE# * -4 Magic, +0 Willpower, +5 Cunning',
@@ -53,7 +53,6 @@ newBirthDescriptor {
     },
     copy = {
         moddable_tile = "raccoonian",
-        random_name_def = "halfling_#sex#",
         life_rating = 10,
     }
 }
