@@ -49,7 +49,7 @@ newBirthDescriptor {
         ["race/raccoonian"] = { true, 0 },
     },
     talents = {
-        [ActorTalents.T_RACCOONIAN_SENSES] = 1,
+        [ActorTalents.T_RACCOONIAN_MALICE] = 1,
     },
     copy = {
         moddable_tile = "raccoonian",

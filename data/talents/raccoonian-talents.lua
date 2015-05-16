@@ -120,6 +120,7 @@ newTalent {
         self:removeTemporaryValue("global_speed_add", p.sid)
         self:removeTemporaryValue("detect_range", p.rid)
         self:removeTemporaryValue("detect_actor", p.aid)
+        return true
     end,
     info = function(self, t)
         local rad = self:getTalentRadius(t)
