@@ -16,12 +16,86 @@ local racial_req4 = {
     level = function(level) return 24 + (level - 1) end,
 }
 
--- Racconian senses.
-newTalent{
-    name = "Raccoonian Senses",
+-- Raccoonian malice.
+newTalent {
+    name = "Raccoonian Malice",
     type = { "race/raccoonian", 1 },
-    mode = "sustained",
     require = racial_req1,
+    points = 5,
+    on_learn = function(self, t)
+        local lev = self:getTalentLevelRaw(t)
+        self.inc_stats[self.STAT_LCK] = self.inc_stats[self.STAT_LCK] + 3
+        self:onStatChange(self.STAT_LCK, 3)
+        self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] + 2
+        self:onStatChange(self.STAT_CUN, 2)
+    end,
+    on_unlearn = function(self, t)
+        local lev = self:getTalentLevelRaw(t)
+        self.inc_stats[self.STAT_LCK] = self.inc_stats[self.STAT_LCK] - 3
+        self:onStatChange(self.STAT_LCK, -3)
+        self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] - 2
+        self:onStatChange(self.STAT_CUN, -2)
+    end,
+    info = function(self, t)
+        return ([[Boosts your racial aptitudes for malice and thievery.
+Increases Cunning by %d and Luck by %d.]]):format(2 * self:getTalentLevelRaw(t), 3 * self:getTalentLevelRaw(t))
+    end,
+}
+
+-- Raccoonian musk.
+newTalent {
+    name = "Raccoonian Musk",
+    type = { "race/raccoonian", 1 },
+    require = racial_req1,
+    points = 5,
+    no_energy = true,
+    no_npc_use = true,
+    cooldown = 30,
+    radius = function(self, t)
+        return math.floor(self:combatScale(self:getTalentLevel(t), 4, 0, 6, 5))
+    end,
+    range = 1,
+    random_ego = "defensive",
+    tactical = { DEFEND = 2 },
+    getDuration = function(self, t)
+        return math.min(15, 8 + math.floor(self:getTalentLevel(t)))
+    end,
+    getIncDamage = function(self, t)
+        return math.floor(math.min(40, 15 + (math.sqrt(self:getTalentLevel(t)) - 1) * 23))
+    end,
+    getPowerPercent = function(self, t)
+        return math.floor((math.sqrt(self:getTalentLevel(t)) - 1) * 20)
+    end,
+    action = function(self, t)
+        local range = self:getTalentRange(t)
+        local duration = t.getDuration(self, t)
+        local incDamage = t.getIncDamage(self, t)
+
+        -- project first to immediately start the effect
+        local tg = {type="ball", radius=range}
+        self:project(tg, self.x, self.y, DamageType.WEAKNESS, { incDamage=incDamage, dur=3 })
+
+        game.level.map:addEffect(self,
+            self.x, self.y, duration,
+            DamageType.WEAKNESS, { incDamage=incDamage, dur=3 },
+            range,
+            5, nil,
+            MapEffect.new{color_br=20, color_bg=220, color_bb=70, effect_shader="shader_images/poison_effect.png"}
+        )
+
+        return true
+    end,
+    info = function(self, t)
+        return ([[Mark your surroundings with you musk glands, making others feel ill-at-ease.]])
+    end,
+}
+
+-- Racconian senses.
+newTalent {
+    name = "Raccoonian Senses",
+    type = { "race/raccoonian", 2 },
+    mode = "sustained",
+    require = racial_req2,
     points = 5,
     no_energy = true,
     no_npc_use = true,
@@ -53,11 +127,12 @@ newTalent{
 Reveal all creatures in a radius of %d. Your deep focus will also slow you down a 20%% while active.]]):format(rad)
     end,
 }
+
 newTalent{
     name = "Raccoonian Rage",
-    type = { "race/raccoonian", 1 },
+    type = { "race/raccoonian", 4 },
     mode = "passive",
-    require = racial_req1,
+    require = racial_req4,
     points = 5,
     maxSpeedup = function(self, t)
         return self:combatTalentScale(t, 0.08, 0.3, 0.75)
@@ -69,6 +144,7 @@ newTalent{
         self:updateTalentPassives(t)
     end,
     passives = function(self, t, p)
+        -- does not get updated when damaged :(
         self:talentTemporaryValue(p, "global_speed_base", t.speedup(self, t))
     end,
     info = function(self, t)
