@@ -17,9 +17,10 @@ local racial_req4 = {
 }
 
 -- Racconian senses.
-newTalent {
+newTalent{
     name = "Raccoonian Senses",
     type = { "race/raccoonian", 1 },
+    mode = "sustained",
     require = racial_req1,
     points = 5,
     no_energy = true,
@@ -30,35 +31,49 @@ newTalent {
     radius = function(self, t)
         return math.floor(self:combatScale(self:getCun(10, true) * self:getTalentLevel(t), 5, 0, 55, 50))
     end,
-    action = function(self, t)
+    activate = function(self, t)
+        local slow = -0.2
         local rad = self:getTalentRadius(t)
-        -- Hardcoded duration to 3 and speed to -0.2.
-        self:setEffect(self.EFF_RACCOONIAN_SENSES, 3, {
-            speed = -0.2,
-            range = rad,
-            actor = 1,
-        })
-        return true
+        local ret = {
+            sid = self:addTemporaryValue("global_speed_add", slow),
+            rid = self:addTemporaryValue("detect_range", rad),
+            aid = self:addTemporaryValue("detect_actor", rad)
+        }
+        game.level.map.changed = true
+        return ret
+    end,
+    deactivate = function(self, t, p)
+        self:removeTemporaryValue("global_speed_add", p.sid)
+        self:removeTemporaryValue("detect_range", p.rid)
+        self:removeTemporaryValue("detect_actor", p.aid)
     end,
     info = function(self, t)
         local rad = self:getTalentRadius(t)
         return ([[Focus on the scents and noises around you.
-All creatures in a radius of %d for 3 turns. Your deep focus will also slow you down a 20%% for the duration.]]):format(rad)
+Reveal all creatures in a radius of %d. Your deep focus will also slow you down a 20%% while active.]]):format(rad)
     end,
 }
 newTalent{
     name = "Raccoonian Rage",
-    type = {"race/raccoonian", 2},
+    type = { "race/raccoonian", 1 },
     mode = "passive",
-    require = racial_req2,
+    require = racial_req1,
     points = 5,
-    on_learn = function(self, t)
-
+    maxSpeedup = function(self, t)
+        return self:combatTalentScale(t, 0.08, 0.3, 0.75)
     end,
-    on_unlearn = function(self, t)
-
+    speedup = function(self, t)
+        return t.maxSpeedup(self, t) * (self.max_life - self.life) / self.max_life
+    end,
+    callbackOnActBase = function(self, t)
+        self:updateTalentPassives(t)
+    end,
+    passives = function(self, t, p)
+        self:talentTemporaryValue(p, "global_speed_base", t.speedup(self, t))
     end,
     info = function(self, t)
-        return ([[Lorem ipsum dolor sit amet]])
+        return ([[Your animal nature makes you react to pain and wounds with a wild frenzy.
+Gives you action speed scaling with your missing live percentage up to %0.1f%% at 0 life. Speed boost may increase further when below 0 life.
+Currently: %0.1f%%]]):format(100 * t.maxSpeedup(self, t), 100 * t.speedup(self, t))
     end,
 }
