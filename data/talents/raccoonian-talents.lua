@@ -130,6 +130,7 @@ Reveal all creatures in a radius of %d. Your deep focus will also slow you down 
     end,
 }
 
+-- Raccoonian rage.
 newTalent{
     name = "Raccoonian Rage",
     type = { "race/raccoonian", 4 },
@@ -137,21 +138,16 @@ newTalent{
     require = racial_req4,
     points = 5,
     maxSpeedup = function(self, t)
-        return self:combatTalentScale(t, 0.08, 0.3, 0.75)
+        return self:combatTalentScale(t, 2.08, 0.3, 0.75)
     end,
     speedup = function(self, t)
-        return t.maxSpeedup(self, t) * (self.max_life - self.life) / self.max_life
+        return t.maxSpeedup(self, t) * (1 - (self.life / self.max_life))
     end,
-    callbackOnActBase = function(self, t)
-        self:updateTalentPassives(t)
-    end,
-    passives = function(self, t, p)
-        -- does not get updated when damaged :(
-        self:talentTemporaryValue(p, "global_speed_base", t.speedup(self, t))
+    callbackOnAct = function(self, t)
+        self:setEffect(self.EFF_RACCOONIAN_RAGE, 1, {power=t.speedup(self, t)})
     end,
     info = function(self, t)
         return ([[Your animal nature makes you react to pain and wounds with a wild frenzy.
-Gives you action speed scaling with your missing live percentage up to %0.1f%% at 0 life. Speed boost may increase further when below 0 life.
-Currently: %0.1f%%]]):format(100 * t.maxSpeedup(self, t), 100 * t.speedup(self, t))
+Gives you action speed scaling with your missing live percentage up to %0.1f%% at 0 life. Speed boost may increase further when below 0 life.]]):format(100 * t.maxSpeedup(self, t), 100 * t.speedup(self, t))
     end,
 }
