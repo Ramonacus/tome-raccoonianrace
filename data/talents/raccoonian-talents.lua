@@ -24,14 +24,12 @@ newTalent {
     require = racial_req1,
     points = 5,
     on_learn = function(self, t)
-        local lev = self:getTalentLevelRaw(t)
         self.inc_stats[self.STAT_LCK] = self.inc_stats[self.STAT_LCK] + 3
         self:onStatChange(self.STAT_LCK, 3)
         self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] + 2
         self:onStatChange(self.STAT_CUN, 2)
     end,
     on_unlearn = function(self, t)
-        local lev = self:getTalentLevelRaw(t)
         self.inc_stats[self.STAT_LCK] = self.inc_stats[self.STAT_LCK] - 3
         self:onStatChange(self.STAT_LCK, -3)
         self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] - 2
