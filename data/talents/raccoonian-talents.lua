@@ -20,6 +20,7 @@ local racial_req4 = {
 newTalent {
     name = "Raccoonian Malice",
     type = { "race/raccoonian", 1 },
+    mode = "passive",
     require = racial_req1,
     points = 5,
     on_learn = function(self, t)
@@ -42,7 +43,7 @@ Increases Cunning by %d and Luck by %d.]]):format(2 * self:getTalentLevelRaw(t),
     end,
 }
 
--- Raccoonian musk.
+-- Raccoonian musk. (Copied from cursed earth for the moment)
 newTalent {
     name = "Raccoonian Musk",
     type = { "race/raccoonian", 1 },
