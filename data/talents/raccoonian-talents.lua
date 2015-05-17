@@ -24,20 +24,20 @@ newTalent {
     require = racial_req1,
     points = 5,
     on_learn = function(self, t)
-        self.inc_stats[self.STAT_LCK] = self.inc_stats[self.STAT_LCK] + 3
-        self:onStatChange(self.STAT_LCK, 3)
-        self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] + 2
-        self:onStatChange(self.STAT_CUN, 2)
+        self.inc_stats[self.STAT_DEX] = self.inc_stats[self.STAT_DEX] + 1
+        self:onStatChange(self.STAT_DEX, 1)
+        self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] + 3
+        self:onStatChange(self.STAT_CUN, 3)
     end,
     on_unlearn = function(self, t)
-        self.inc_stats[self.STAT_LCK] = self.inc_stats[self.STAT_LCK] - 3
-        self:onStatChange(self.STAT_LCK, -3)
-        self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] - 2
-        self:onStatChange(self.STAT_CUN, -2)
+        self.inc_stats[self.STAT_DEX] = self.inc_stats[self.STAT_DEX] - 1
+        self:onStatChange(self.STAT_DEX, - 1)
+        self.inc_stats[self.STAT_CUN] = self.inc_stats[self.STAT_CUN] - 3
+        self:onStatChange(self.STAT_CUN, - 3)
     end,
     info = function(self, t)
         return ([[Boosts your racial aptitudes for malice and thievery.
-Increases Cunning by %d and Luck by %d.]]):format(2 * self:getTalentLevelRaw(t), 3 * self:getTalentLevelRaw(t))
+Increases Cunning by %d and Dexterity by %d.]]):format(3 * self:getTalentLevelRaw(t), self:getTalentLevelRaw(t))
     end,
 }
 
