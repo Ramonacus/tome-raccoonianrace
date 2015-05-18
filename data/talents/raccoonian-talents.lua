@@ -121,7 +121,7 @@ newTalent {
     require = racial_req4,
     points = 5,
     maxSpeedup = function(self, t)
-        return self:combatTalentScale(t, 2.08, 0.3, 0.75)
+        return self:combatTalentScale(t, 0.08, 0.35, 0.75)
     end,
     speedup = function(self, t)
         return t.maxSpeedup(self, t) * (1 - (self.life / self.max_life))
