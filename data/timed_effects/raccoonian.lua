@@ -47,7 +47,7 @@ newEffect{
     parameters = {
         power = 0.2
     },
-    callbackOnMove = function(self, eff, moved, force, ox, oy)
+    callbackOnActBase = function(self, eff)
         local tgts = {}
         for _, c in pairs(util.adjacentCoords(self.x, self.y)) do
             local target = game.level.map(c[1], c[2], Map.ACTOR)

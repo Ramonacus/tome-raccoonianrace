@@ -109,7 +109,7 @@ newTalent {
     end,
     info = function(self, t)
         return ([[Enter a destructive rampage state, boosting your movement speed by %d%% for %d turns.
-Every movement action will let you unleash your destructive behaviour, granting a free attack to a random adjacent enemy as phyisical damage.]]):format(100 * t.getMovementSpeed(self, t), t.getDuration(self, t))
+Every game turn you will unleash your destructive behaviour, granting a free attack to a random adjacent enemy as phyisical damage.]]):format(100 * t.getMovementSpeed(self, t), t.getDuration(self, t))
     end,
 }
 
